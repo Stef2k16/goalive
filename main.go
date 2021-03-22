@@ -2,49 +2,32 @@ package main
 
 import (
 	"fmt"
-	"github.com/bwmarrin/discordgo"
+	"galive/notification"
 	"log"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 )
 
-var token = "ODIyODQ4MjQyNDYyMzU5NTky.YFYPJA.1KM0nt7xmRpHt8aiqYyi1bQJnQQ"
-
 func main() {
-	dg, err := discordgo.New("Bot " + token)
+	token := "ODIyODQ4MjQyNDYyMzU5NTky.YFYPJA.1KM0nt7xmRpHt8aiqYyi1bQJnQQ"
+	channelID := "822848790955294723"
+	var c notification.Client
+	c, err := notification.NewDiscordClient(token, channelID)
 	if err != nil {
-		log.Fatal("Error creating Discord session: ", err)
+		log.Fatal("Error creating session: ", err)
 		return
 	}
 
-	dg.AddHandler(messageCreate)
+	fmt.Println("Notification Bot is now running. Press CTRL-C to exit.")
 
-	err = dg.Open()
-	if err != nil {
-		log.Fatal("error opening connection,", err)
-		return
-	}
+	err = c.SendNotification("I'm alive!")
+	fmt.Println(err)
 
-	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
-
-	dg.Close()
-}
-
-func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-	if m.Author.ID == s.State.User.ID {
-		return
-	}
-
-	if strings.HasPrefix(m.Content, "!test") {
-		_, err := s.ChannelMessageSend(m.ChannelID, "<@399237995728863232> hey!")
-		if err != nil {
-			log.Println("Message could not be sent: ", err)
-		}
-
+	if err := c.Close(); err != nil {
+		log.Fatal("Error closing session: ", err)
 	}
 }
