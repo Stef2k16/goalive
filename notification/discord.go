@@ -4,13 +4,13 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-// DiscordClient allows to interact with a specified discord channel.
+// DiscordClient allows to interact with a discord channel.
 type DiscordClient struct {
 	Session   *discordgo.Session
 	channelID string
 }
 
-// New starts and returns a new discord client using the given token.
+// NewDiscordClient starts and returns a new discord client using the given token.
 func NewDiscordClient(token string, channelID string) (*DiscordClient, error) {
 	s, err := discordgo.New("Bot " + token)
 	if err != nil {
