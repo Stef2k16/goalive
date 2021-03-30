@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"galive/config"
 	"galive/monitor"
@@ -13,7 +14,8 @@ import (
 )
 
 func main() {
-	conf, err := config.New("config.yaml")
+	configPath := parseFlags()
+	conf, err := config.New(configPath)
 	if err != nil {
 		log.Fatal("Error creating notification session: ", err)
 	}
@@ -37,4 +39,11 @@ func main() {
 	if err := c.Close(); err != nil {
 		log.Fatal("Error closing session of the notification client: ", err)
 	}
+}
+
+// Parse the command line flags.
+func parseFlags() string {
+	configPath := flag.String("config", "", "path to the configuration file")
+	flag.Parse()
+	return *configPath
 }
