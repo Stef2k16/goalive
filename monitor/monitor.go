@@ -1,34 +1,14 @@
+// Package monitor implements functionality to poll endpoints and notify about the retrieved status.
 package monitor
 
 import (
 	"fmt"
 	"galive/notification"
-	"io"
 	"log"
-	"net/http"
 	"os"
 	"sync"
 	"time"
 )
-
-// status holds the results and metadata of one request to an endpoint.
-type status struct {
-	timestamp          time.Time
-	success            bool
-	code               int
-	body               string
-	url                string
-	notificationFailed bool
-}
-
-func (st *status) String() string {
-	if st.success {
-		return fmt.Sprintf("Request for %v SUCCEEDED at %s\n\tStatus: %d\n\tBody: %s",
-			st.url, st.timestamp.Format(time.RFC1123), st.code, st.body)
-	}
-	return fmt.Sprintf("Request for %s FAILED at %s\n\tStatus: %d\n\tBody: %s",
-		st.url, st.timestamp.Format(time.RFC1123), st.code, st.body)
-}
 
 // Monitor provides the functionality to monitor http endpoints.
 type Monitor struct {
@@ -105,40 +85,4 @@ func (m *Monitor) respondToStatus(url string) {
 	m.prevStatusMutex.Lock()
 	m.prevStatus[url] = st
 	m.prevStatusMutex.Unlock()
-}
-
-// getStatus sends a get request to request the status of a service.
-func getStatus(url string) status {
-	resp, err := http.Get(url)
-	if err != nil {
-		return status{
-			timestamp:          time.Now(),
-			success:            false,
-			code:               0,
-			body:               err.Error(),
-			url:                url,
-			notificationFailed: false,
-		}
-	}
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return status{
-			timestamp:          time.Now(),
-			success:            false,
-			code:               0,
-			body:               err.Error(),
-			url:                url,
-			notificationFailed: false,
-		}
-	}
-	successfulResponse := resp.StatusCode >= 200 && resp.StatusCode < 300
-	st := status{
-		timestamp:          time.Now(),
-		success:            successfulResponse,
-		code:               resp.StatusCode,
-		body:               string(body),
-		url:                url,
-		notificationFailed: false,
-	}
-	return st
 }
