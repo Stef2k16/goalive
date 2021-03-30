@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	conf, err := config.New("example-config.yaml")
+	conf, err := config.New("config.yaml")
 	if err != nil {
 		log.Fatal("Error creating notification session: ", err)
 	}

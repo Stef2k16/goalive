@@ -1,0 +1,19 @@
+# Sample configuration for Discord
+notification:
+  client: 'discord'
+  token: 'replace Me With Your Bot Token'
+  # Discord messages are directed towards a channel and thus the ID of a channel is required
+  channel: 'replace Me With Your Channel ID'
+url: ['https://httpstat.us/404', 'https://httpstat.us/200']
+pollingInterval: 30
+logFile: 'log.txt'
+
+## Sample configuration for Telegram.
+#notification:
+#  client: 'telegram'
+#  token: 'replace Me With Your Bot Token'
+#  # Telegram messages are directed towards a user and thus the ID of the user is required
+#  user: 'replace Me With Your User ID'
+#url: ['https://httpstat.us/404', 'https://httpstat.us/200']
+#pollingInterval: 30
+#logFile: 'log.txt'

@@ -29,7 +29,7 @@ func GetClient(notification config.Notification) (Client, error) {
 	case telegram:
 		{
 			var c Client
-			c, err := NewTelegramClient(notification.Token, notification.Channel)
+			c, err := NewTelegramClient(notification.Token, notification.User)
 			return c, err
 		}
 	}

@@ -18,6 +18,7 @@ type Notification struct {
 	Client  string `yaml:"client"`
 	Token   string `yaml:"token"`
 	Channel string `yaml:"channel"`
+	User    string `yaml:"user"`
 }
 
 // New returns a decoded Config from a YAML file at the given path.
