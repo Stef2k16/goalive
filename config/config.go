@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// Config is the configuration for a monitor.
 type Config struct {
 	Notification    Notification `yaml:"notification"`
 	URL             []string     `yaml:"url"`
@@ -12,6 +13,7 @@ type Config struct {
 	LogFile         string       `yaml:"logFile"`
 }
 
+// Notification holds the configuration for a notification client.
 type Notification struct {
 	Client  string `yaml:"client"`
 	Token   string `yaml:"token"`

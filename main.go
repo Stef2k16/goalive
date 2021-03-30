@@ -18,8 +18,7 @@ func main() {
 		log.Fatal("Error creating notification session: ", err)
 	}
 
-	var c notification.Client
-	c, err = notification.NewDiscordClient(conf.Notification.Token, conf.Notification.Channel)
+	c, err := notification.GetClient(conf.Notification)
 	if err != nil {
 		log.Fatal("Error creating notification session: ", err)
 	}
@@ -28,7 +27,6 @@ func main() {
 	if err != nil {
 		log.Fatal("Error creating monitor: ", err)
 	}
-
 	m.Start()
 
 	fmt.Println("Notification Bot is now running. Press CTRL-C to exit.")
