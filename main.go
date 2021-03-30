@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"galive/config"
 	"galive/monitor"
 	"galive/notification"
 	"log"
@@ -12,20 +13,20 @@ import (
 )
 
 func main() {
-	token := "ODIyODQ4MjQyNDYyMzU5NTky.YFYPJA.1KM0nt7xmRpHt8aiqYyi1bQJnQQ"
-	channelID := "822848790955294723"
-	var c notification.Client
-	c, err := notification.NewDiscordClient(token, channelID)
+	conf, err := config.New("example-config.yaml")
 	if err != nil {
 		log.Fatal("Error creating notification session: ", err)
-		return
 	}
-	urls := []string{"https://httpstat.us/404", "https://httpstat.us/200"}
 
-	m, err := monitor.New("testlog.txt", c, urls, 15*time.Second)
+	var c notification.Client
+	c, err = notification.NewDiscordClient(conf.Notification.Token, conf.Notification.Channel)
+	if err != nil {
+		log.Fatal("Error creating notification session: ", err)
+	}
+
+	m, err := monitor.New(conf.LogFile, c, conf.URL, time.Duration(conf.PollingInterval)*time.Second)
 	if err != nil {
 		log.Fatal("Error creating monitor: ", err)
-		return
 	}
 
 	m.Start()
