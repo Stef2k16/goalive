@@ -1,4 +1,6 @@
 # Goalive
+[![Go Report Card](https://goreportcard.com/badge/github.com/Stef2k16/goalive)](https://goreportcard.com/report/github.com/Stef2k16/gosleep)
+
 **Goalive** is a simple tool to monitor health endpoints of your services.
 
 ## Functionality
