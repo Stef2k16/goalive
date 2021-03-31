@@ -5,38 +5,31 @@ import (
 	"fmt"
 	"galive/config"
 	"galive/monitor"
-	"galive/notification"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 )
 
 func main() {
 	configPath := parseFlags()
 	conf, err := config.New(configPath)
 	if err != nil {
-		log.Fatal("Error creating notification session: ", err)
+		log.Fatal("Error initializing configuration: ", err)
 	}
 
-	c, err := notification.GetClient(conf.Notification)
-	if err != nil {
-		log.Fatal("Error creating notification session: ", err)
-	}
-
-	m, err := monitor.New(conf.LogFile, c, conf.URL, time.Duration(conf.PollingInterval)*time.Second)
+	m, err := monitor.New(conf)
 	if err != nil {
 		log.Fatal("Error creating monitor: ", err)
 	}
 	m.Start()
 
-	fmt.Println("Notification Bot is now running. Press CTRL-C to exit.")
+	fmt.Println("Monitoring and Notification Bot are now running. Press CTRL-C to exit.")
 
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
-	if err := c.Close(); err != nil {
+	if err := m.NotificationClient.Stop(); err != nil {
 		log.Fatal("Error closing session of the notification client: ", err)
 	}
 }

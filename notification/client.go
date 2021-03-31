@@ -13,8 +13,10 @@ const (
 
 // Client describes an interface that allows to send notification to a service.
 type Client interface {
+	Start() error
+	Stop() error
+	AddStatusHandler(func() string)
 	SendNotification(message string) error
-	Close() error
 }
 
 // GetClient returns a client of the specified type. Each available type is defined as a constant.

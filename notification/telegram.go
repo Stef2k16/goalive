@@ -20,13 +20,24 @@ func NewTelegramClient(token string, userID string) (*TelegramClient, error) {
 	if err != nil {
 		return nil, err
 	}
-	go b.Start()
 
 	tc := TelegramClient{
 		Bot:    b,
 		userID: userID,
 	}
 	return &tc, nil
+}
+
+// Start starts the Telegram bot.
+func (tc *TelegramClient) Start() error {
+	go tc.Bot.Start()
+	return nil
+}
+
+// Stop stops the Telegram bot.
+func (tc *TelegramClient) Stop() error {
+	tc.Bot.Stop()
+	return nil
 }
 
 // SendNotification sends the given message to the channel that is specified in the TelegramClient.
@@ -38,8 +49,10 @@ func (tc *TelegramClient) SendNotification(message string) error {
 	return err
 }
 
-// Close stops the Telegram bot.
-func (tc *TelegramClient) Close() error {
-	tc.Bot.Stop()
-	return nil
+// AddStatusHandler adds a handler to the bot that replies with the current monitoring status.
+func (tc *TelegramClient) AddStatusHandler(statusSummary func() string) {
+	tc.Bot.Handle("/status", func(m *tb.Message) {
+		summary := statusSummary()
+		_, _ = tc.Bot.Send(m.Sender, summary)
+	})
 }
