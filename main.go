@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"galive/config"
-	"galive/monitor"
+	"goalive/config"
+	"goalive/monitor"
 	"log"
 	"os"
 	"os/signal"

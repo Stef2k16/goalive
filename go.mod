@@ -1,4 +1,4 @@
-module galive
+module goalive
 
 go 1.16
 

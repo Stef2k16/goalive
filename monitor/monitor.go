@@ -3,8 +3,8 @@ package monitor
 
 import (
 	"fmt"
-	"galive/config"
-	"galive/notification"
+	"goalive/config"
+	"goalive/notification"
 	"log"
 	"os"
 	"sync"
