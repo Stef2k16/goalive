@@ -34,7 +34,7 @@ func main() {
 	}
 }
 
-// Parse the command line flags.
+// parseFlags parses the command line flags and returns its value.
 func parseFlags() string {
 	configPath := flag.String("config", "", "path to the configuration file")
 	flag.Parse()
