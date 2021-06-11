@@ -1,5 +1,5 @@
 # Goalive
-[![Go Report Card](https://goreportcard.com/badge/github.com/Stef2k16/goalive)](https://goreportcard.com/report/github.com/Stef2k16/gosleep)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Stef2k16/goalive)](https://goreportcard.com/report/github.com/Stef2k16/goalive)
 
 **Goalive** is a simple tool to monitor health endpoints of your services.
 
@@ -36,9 +36,18 @@ To set up a new bot and receive a bot token, simply send `\newbot` to _BotFather
 example add the _userinfobot_ in Telegram and start it. The bot will then reply with your user ID.
 
 ### Get Goalive and Adjust the Configuration to Your Needs
-Currently, Goalive can only be built from source. You thus need [Go](https://golang.org/dl/) (version >= 1.16).
+#### Download the Latest Release
+You can download a pre-built executable for Windows (goalive.exe) or Linux (goalive) from 
+the [release page](https://github.com/Stef2k16/goalive/releases).
 
-To create an executable, clone the repository and run `go build`. The repo contains an example configuration
+#### Build from Source
+If you need an executable for a different platform, Goalive can only be built from source with
+[Go](https://golang.org/dl/) (version >= 1.16).
+
+To create an executable, clone the repository and run `go build` within the cloned repository. 
+
+#### Create a Configuration
+The repo contains an example configuration
 `example-config.yaml`. You at least have to add your bot token and channel ID (for Discord) / user ID (for Telegram)
 to the configuration.
 Additionally, you can define the URLs you want to monitor, the polling interval in seconds, and the location of a log 
