@@ -1,4 +1,5 @@
 .idea
 logs
 config.yaml
-/goalive.exe
+goalive.exe
+goalive

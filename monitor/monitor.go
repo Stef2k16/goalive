@@ -3,8 +3,8 @@ package monitor
 
 import (
 	"fmt"
-	"goalive/config"
-	"goalive/notification"
+	"github.com/Stef2k16/goalive/config"
+	"github.com/Stef2k16/goalive/notification"
 	"log"
 	"os"
 	"sync"

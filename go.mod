@@ -1,4 +1,4 @@
-module goalive
+module github.com/Stef2k16/goalive
 
 go 1.16
 

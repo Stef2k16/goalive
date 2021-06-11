@@ -3,7 +3,7 @@ package notification
 
 import (
 	"fmt"
-	"goalive/config"
+	"github.com/Stef2k16/goalive/config"
 )
 
 const (
