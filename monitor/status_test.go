@@ -18,7 +18,9 @@ func TestStatusToStringSuccess(t *testing.T) {
 	stString := st.String()
 	expected := "Request for www.example.com SUCCEEDED at Fri, 11 Jun 2021 20:36:14 UTC\n\tStatus: 200\n\tBody: Health OK"
 	if !(stString == expected) {
-		t.Errorf("st.String(): \nGot\n%s\nExpected:\n%s", stString, expected)
+		t.Errorf(`st.String()
+			Got: %s
+			Expected: %s`, stString, expected)
 	}
 }
 
@@ -35,6 +37,46 @@ func TestStatusToStringFailure(t *testing.T) {
 	stString := st.String()
 	expected := "Request for www.example.com FAILED at Fri, 11 Jun 2021 20:36:14 UTC\n\tStatus: 500\n\tBody: Healthcheck failed"
 	if !(stString == expected) {
-		t.Errorf("st.String(): \nGot\n%s\nExpected:\n%s", stString, expected)
+		t.Errorf(`st.String()
+			Got: %s
+			Expected: %s`, stString, expected)
+	}
+}
+
+func TestGetStatusSuccess(t *testing.T) {
+	url := "https://httpstat.us/200"
+	st := getStatus(url)
+	st.timestamp = time.Time{}
+	expected := status{
+		timestamp:          time.Time{},
+		success:            true,
+		code:               200,
+		body:               "",
+		url:                url,
+		notificationFailed: false,
+	}
+	if st != expected {
+		t.Errorf(`getStatus(%s)
+			Got: %v
+			Expected: %v`, url, st, expected)
+	}
+}
+
+func TestGetStatusFailure(t *testing.T) {
+	url := "https://httpstat.us/404"
+	st := getStatus(url)
+	st.timestamp = time.Time{}
+	expected := status{
+		timestamp:          time.Time{},
+		success:            false,
+		code:               404,
+		body:               "",
+		url:                url,
+		notificationFailed: false,
+	}
+	if st != expected {
+		t.Errorf(`getStatus(%s)
+			Got: %v
+			Expected: %v`, url, st, expected)
 	}
 }
