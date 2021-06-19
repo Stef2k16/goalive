@@ -80,3 +80,22 @@ func TestGetStatusFailure(t *testing.T) {
 			Expected: %v`, url, st, expected)
 	}
 }
+
+func TestGetStatusInvalidUrl(t *testing.T) {
+	url := "NotAUrl"
+	st := getStatus(url)
+	st.timestamp = time.Time{}
+	expected := status{
+		timestamp:          time.Time{},
+		success:            false,
+		code:               0,
+		body:               "Get \"NotAUrl\": unsupported protocol scheme \"\"",
+		url:                url,
+		notificationFailed: false,
+	}
+	if st != expected {
+		t.Errorf(`getStatus(%s)
+			Got: %v
+			Expected: %v`, url, st, expected)
+	}
+}
