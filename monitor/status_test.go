@@ -12,11 +12,11 @@ func TestStatusToStringSuccess(t *testing.T) {
 		success:            true,
 		code:               200,
 		body:               "Health OK",
-		url:                "www.example.com",
+		url:                "https://example.com",
 		notificationFailed: false,
 	}
 	stString := st.String()
-	expected := "Request for www.example.com SUCCEEDED at Fri, 11 Jun 2021 20:36:14 UTC\n\tStatus: 200\n\tBody: Health OK"
+	expected := "Request for https://example.com SUCCEEDED at Fri, 11 Jun 2021 20:36:14 UTC\n\tStatus: 200\n\tBody: Health OK"
 	if !(stString == expected) {
 		t.Errorf(`st.String()
 			Got: %s
@@ -31,11 +31,11 @@ func TestStatusToStringFailure(t *testing.T) {
 		success:            false,
 		code:               500,
 		body:               "Healthcheck failed",
-		url:                "www.example.com",
+		url:                "https://example.com",
 		notificationFailed: false,
 	}
 	stString := st.String()
-	expected := "Request for www.example.com FAILED at Fri, 11 Jun 2021 20:36:14 UTC\n\tStatus: 500\n\tBody: Healthcheck failed"
+	expected := "Request for https://example.com FAILED at Fri, 11 Jun 2021 20:36:14 UTC\n\tStatus: 500\n\tBody: Healthcheck failed"
 	if !(stString == expected) {
 		t.Errorf(`st.String()
 			Got: %s
