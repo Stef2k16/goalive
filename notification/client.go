@@ -9,6 +9,7 @@ import (
 const (
 	telegram = "telegram"
 	discord  = "discord"
+	mock     = "mock"
 )
 
 // Client describes an interface that allows to send notification to a service.
@@ -33,6 +34,13 @@ func GetClient(notification config.Notification) (Client, error) {
 			var c Client
 			c, err := NewTelegramClient(notification.Token, notification.User)
 			return c, err
+		}
+
+	case mock:
+		{
+			var c Client
+			c = NewMockClient()
+			return c, nil
 		}
 	}
 	return nil, fmt.Errorf("no client found for client type '%s'", notification.Client)
