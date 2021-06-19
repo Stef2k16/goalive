@@ -1,6 +1,6 @@
 # Goalive
 [![Go Report Card](https://goreportcard.com/badge/github.com/Stef2k16/goalive)](https://goreportcard.com/report/github.com/Stef2k16/goalive)
-[![Build & Tests](https://github.com/Stef2k16/goalive/actions/workflows/go.yml/badge.svg)](https://github.com/Stef2k16/goalive/actions)
+[![Build & Tests](https://github.com/Stef2k16/goalive/actions/workflows/pipeline.yml/badge.svg)](https://github.com/Stef2k16/goalive/actions)
 
 **Goalive** is a simple tool to monitor health endpoints of your services.
 
