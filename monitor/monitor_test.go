@@ -97,3 +97,120 @@ func TestStatusSummaryNotificationFailed(t *testing.T) {
 			Expected: %s`, summary, expectedSummary)
 	}
 }
+
+func TestRespondToStatusSuccess(t *testing.T) {
+	url := "https://httpstat.us/200"
+	prevStatus := map[string]status{
+		url: {
+			timestamp:          time.Time{},
+			success:            true,
+			code:               200,
+			body:               "Health OK",
+			url:                url,
+			notificationFailed: false,
+		},
+	}
+	m := Monitor{
+		logger:             log.Default(),
+		NotificationClient: notification.NewMockClient(),
+		urls:               []string{url},
+		pollingInterval:    10,
+		prevStatus:         prevStatus,
+		prevStatusMutex:    &sync.Mutex{},
+	}
+
+	m.respondToStatus(url)
+	st := m.prevStatus[url]
+	st.timestamp = time.Time{}
+	expected := status{
+		timestamp:          time.Time{},
+		success:            true,
+		code:               200,
+		body:               "",
+		url:                url,
+		notificationFailed: false,
+	}
+	if st != expected {
+		t.Errorf(`m.respondToStatus(%s)
+			Got: %v
+			Expected: %v`, url, st, expected)
+	}
+}
+
+func TestRespondToStatusSuccessWithPreviousFailure(t *testing.T) {
+	url := "https://httpstat.us/200"
+	prevStatus := map[string]status{
+		url: {
+			timestamp:          time.Time{},
+			success:            false,
+			code:               404,
+			body:               "Health not OK",
+			url:                url,
+			notificationFailed: false,
+		},
+	}
+	m := Monitor{
+		logger:             log.Default(),
+		NotificationClient: notification.NewMockClient(),
+		urls:               []string{url},
+		pollingInterval:    10,
+		prevStatus:         prevStatus,
+		prevStatusMutex:    &sync.Mutex{},
+	}
+
+	m.respondToStatus(url)
+	st := m.prevStatus[url]
+	st.timestamp = time.Time{}
+	expected := status{
+		timestamp:          time.Time{},
+		success:            true,
+		code:               200,
+		body:               "",
+		url:                url,
+		notificationFailed: false,
+	}
+	if st != expected {
+		t.Errorf(`m.respondToStatus(%s)
+			Got: %v
+			Expected: %v`, url, st, expected)
+	}
+}
+
+func TestRespondToStatusFailureWithPreviousSuccess(t *testing.T) {
+	url := "https://httpstat.us/404"
+	prevStatus := map[string]status{
+		url: {
+			timestamp:          time.Time{},
+			success:            true,
+			code:               200,
+			body:               "Health OK",
+			url:                url,
+			notificationFailed: false,
+		},
+	}
+	m := Monitor{
+		logger:             log.Default(),
+		NotificationClient: notification.NewMockClient(),
+		urls:               []string{url},
+		pollingInterval:    10,
+		prevStatus:         prevStatus,
+		prevStatusMutex:    &sync.Mutex{},
+	}
+
+	m.respondToStatus(url)
+	st := m.prevStatus[url]
+	st.timestamp = time.Time{}
+	expected := status{
+		timestamp:          time.Time{},
+		success:            false,
+		code:               404,
+		body:               "",
+		url:                url,
+		notificationFailed: false,
+	}
+	if st != expected {
+		t.Errorf(`m.respondToStatus(%s)
+			Got: %v
+			Expected: %v`, url, st, expected)
+	}
+}
