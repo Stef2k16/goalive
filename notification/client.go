@@ -9,6 +9,7 @@ import (
 const (
 	telegram = "telegram"
 	discord  = "discord"
+	slack    = "slack"
 	mock     = "mock"
 )
 
@@ -35,7 +36,12 @@ func GetClient(notification config.Notification) (Client, error) {
 			c, err := NewTelegramClient(notification.Token, notification.User)
 			return c, err
 		}
-
+	case slack:
+		{
+			var c Client
+			c = NewSlackClient(notification.Token, notification.AppToken, notification.Channel)
+			return c, nil
+		}
 	case mock:
 		{
 			var c Client
