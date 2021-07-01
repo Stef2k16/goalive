@@ -17,3 +17,14 @@ logFile: 'log.txt'
 #url: ['https://httpstat.us/404', 'https://httpstat.us/200']
 #pollingInterval: 300 #in seconds
 #logFile: 'log.txt'
+
+## Configuration for Slack
+#notification:
+#  client: 'slack'
+#  token: 'Replace Me With Your Bot Token (Should be of the form xoxb-*)'
+#  appToken: 'Replace Me With Your App Token (Should be of the form xapp-*)'
+#  # Slack messages are directed towards a channel and thus the ID of a channel is required
+#  channel: 'Replace Me With Your Channel ID'
+#url: ['https://httpstat.us/404', 'https://httpstat.us/200']
+#pollingInterval: 300 #in seconds
+#logFile: 'log.txt'
