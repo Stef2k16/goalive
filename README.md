@@ -7,8 +7,8 @@
 ## Functionality
 **Goalive** allows to define a list of custom endpoints that should be polled periodically. These endpoints should be
 dedicated health endpoints that return a 2xx HTTP status code if the service is running fine.
-In case of problems, i.e. HTTP status codes != 2xx or connection issues, notifications can be send via Discord or 
-Telegram. To avoid messages en masse for a failing endpoint, notifications are only
+In case of problems, i.e. HTTP status codes != 2xx or connection issues, notifications can be send via Discord, 
+Telegram, or Slack. To avoid messages en masse for a failing endpoint, notifications are only
 send for the first detected failure or if a previously failing endpoint has been fixed.
 
 Alternatively, the most recent status can be requested manually. 
