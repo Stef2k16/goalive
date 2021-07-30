@@ -2,7 +2,8 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/Stef2k16/goalive)](https://goreportcard.com/report/github.com/Stef2k16/goalive)
 [![Build & Tests](https://github.com/Stef2k16/goalive/actions/workflows/pipeline.yml/badge.svg)](https://github.com/Stef2k16/goalive/actions)
 
-**Goalive** is a simple tool to monitor health endpoints of your services.
+**Goalive** is a simple tool to monitor health endpoints of your services using modern notification
+clients.
 
 ## Functionality
 **Goalive** allows to define a list of custom endpoints that should be polled periodically. These endpoints should be
