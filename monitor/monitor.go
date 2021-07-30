@@ -67,6 +67,7 @@ func (m *Monitor) Start() {
 // StatusSummary creates a summary of the currently cached status for all monitored urls.
 func (m *Monitor) statusSummary() string {
 	var summary string
+	m.prevStatusMutex.Lock()
 	for _, st := range m.prevStatus {
 		part1 := fmt.Sprintf("%s polled at %s:\n", st.url, st.timestamp.Format(time.RFC1123))
 		readableStatus := "FAILED"
@@ -76,6 +77,7 @@ func (m *Monitor) statusSummary() string {
 		part2 := fmt.Sprintf("\tRequest %s with Status %d\n\tBody: %s\n\n", readableStatus, st.code, st.body)
 		summary += part1 + part2
 	}
+	m.prevStatusMutex.Unlock()
 	return summary
 }
 
@@ -88,7 +90,9 @@ func (m *Monitor) log(message string) {
 func (m *Monitor) respondToStatus(url string) {
 	st := getStatus(url)
 	message := st.String()
+	m.prevStatusMutex.Lock()
 	prevStatus, ok := m.prevStatus[url]
+	m.prevStatusMutex.Unlock()
 	prevStatusFailed := ok && !prevStatus.success
 	prevStatusSucceeded := ok && prevStatus.success
 	prevStatusNotificationFailed := ok && prevStatus.notificationFailed
