@@ -15,10 +15,11 @@ type Config struct {
 
 // Notification holds the configuration for a notification client.
 type Notification struct {
-	Client  string `yaml:"client"`
-	Token   string `yaml:"token"`
-	Channel string `yaml:"channel"`
-	User    string `yaml:"user"`
+	Client   string `yaml:"client"`
+	Token    string `yaml:"token"`
+	AppToken string `yaml:"appToken"`
+	Channel  string `yaml:"channel"`
+	User     string `yaml:"user"`
 }
 
 // New returns a decoded Config from a YAML file at the given path.
