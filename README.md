@@ -74,3 +74,9 @@ file.
 
 After your configuration is ready, you can start the monitoring with `./goalive --config path/to/your/config.yaml`
 on Linux-based systems or `goalive.exe --config path/to/your/config.yaml` on Windows.
+
+## References
+The project relies on fantastic API wrappers for Discord, Slack and Telegram:
+- [DiscordGo](https://github.com/bwmarrin/discordgo)
+- [Slack API in Go](https://github.com/slack-go/slack)
+- [Telebot](https://github.com/tucnak/telebot)
