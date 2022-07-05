@@ -126,7 +126,7 @@ func TestRespondToStatusSuccess(t *testing.T) {
 		timestamp:          time.Time{},
 		success:            true,
 		code:               200,
-		body:               "",
+		body:               "200 OK",
 		url:                url,
 		notificationFailed: false,
 	}
@@ -165,7 +165,7 @@ func TestRespondToStatusSuccessWithPreviousFailure(t *testing.T) {
 		timestamp:          time.Time{},
 		success:            true,
 		code:               200,
-		body:               "",
+		body:               "200 OK",
 		url:                url,
 		notificationFailed: false,
 	}
@@ -204,7 +204,7 @@ func TestRespondToStatusFailureWithPreviousSuccess(t *testing.T) {
 		timestamp:          time.Time{},
 		success:            false,
 		code:               404,
-		body:               "",
+		body:               "404 Not Found",
 		url:                url,
 		notificationFailed: false,
 	}
