@@ -51,7 +51,7 @@ func TestGetStatusSuccess(t *testing.T) {
 		timestamp:          time.Time{},
 		success:            true,
 		code:               200,
-		body:               "",
+		body:               "200 OK",
 		url:                url,
 		notificationFailed: false,
 	}
@@ -70,7 +70,7 @@ func TestGetStatusFailure(t *testing.T) {
 		timestamp:          time.Time{},
 		success:            false,
 		code:               404,
-		body:               "",
+		body:               "404 Not Found",
 		url:                url,
 		notificationFailed: false,
 	}
