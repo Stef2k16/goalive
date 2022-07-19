@@ -1,21 +1,22 @@
 package notification
 
 import (
-	tb "gopkg.in/tucnak/telebot.v2"
+	tele "gopkg.in/telebot.v3"
+	"strconv"
 	"time"
 )
 
 // TelegramClient allows to interact with a Telegram channel.
 type TelegramClient struct {
-	Bot    *tb.Bot
+	Bot    *tele.Bot
 	userID string
 }
 
 // NewTelegramClient starts and returns a new Telegram client using the given token.
 func NewTelegramClient(token string, userID string) (*TelegramClient, error) {
-	b, err := tb.NewBot(tb.Settings{
+	b, err := tele.NewBot(tele.Settings{
 		Token:  token,
-		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
+		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 	})
 	if err != nil {
 		return nil, err
@@ -42,17 +43,22 @@ func (tc *TelegramClient) Stop() error {
 
 // SendNotification sends the given message to the channel that is specified in the TelegramClient.
 func (tc *TelegramClient) SendNotification(message string) error {
-	user := &tb.User{
-		ID: 822715646,
+	id, err := strconv.ParseInt(tc.userID, 10, 64)
+	if err != nil {
+		return err
 	}
-	_, err := tc.Bot.Send(user, message)
+
+	user := &tele.User{
+		ID: id,
+	}
+	_, err = tc.Bot.Send(user, message)
 	return err
 }
 
 // AddStatusHandler adds a handler to the bot that replies with the current monitoring status.
 func (tc *TelegramClient) AddStatusHandler(statusSummary func() string) {
-	tc.Bot.Handle("/status", func(m *tb.Message) {
+	tc.Bot.Handle("/status", func(c tele.Context) error {
 		summary := statusSummary()
-		_, _ = tc.Bot.Send(m.Sender, summary)
+		return c.Send(summary)
 	})
 }
