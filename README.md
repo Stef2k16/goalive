@@ -61,7 +61,7 @@ the [release page](https://github.com/Stef2k16/goalive/releases).
 
 #### Build from Source
 If you need an executable for a different platform, Goalive can be built from source with
-[Go](https://golang.org/dl/) (version >= 1.16).
+[Go](https://golang.org/dl/) (version >= 1.18).
 
 To create an executable, clone the repository and run `go build` within the cloned repository. 
 
