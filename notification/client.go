@@ -26,27 +26,19 @@ func GetClient(notification config.Notification) (Client, error) {
 	switch notification.Client {
 	case discord:
 		{
-			var c Client
-			c, err := NewDiscordClient(notification.Token, notification.Channel)
-			return c, err
+			return NewDiscordClient(notification.Token, notification.Channel)
 		}
 	case telegram:
 		{
-			var c Client
-			c, err := NewTelegramClient(notification.Token, notification.User)
-			return c, err
+			return NewTelegramClient(notification.Token, notification.User)
 		}
 	case slack:
 		{
-			var c Client
-			c = NewSlackClient(notification.Token, notification.AppToken, notification.Channel)
-			return c, nil
+			return NewSlackClient(notification.Token, notification.AppToken, notification.Channel), nil
 		}
 	case mock:
 		{
-			var c Client
-			c = NewMockClient()
-			return c, nil
+			return NewMockClient(), nil
 		}
 	}
 	return nil, fmt.Errorf("no client found for client type '%s'", notification.Client)
